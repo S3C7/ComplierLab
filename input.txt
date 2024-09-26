@@ -1,5 +1,16 @@
 #include <stdio.h>
 #define MAX_INT 23
+
+
+
+
+
+
+
+
+
+
+
 int main()
 {
 	int num1,num2,num3;

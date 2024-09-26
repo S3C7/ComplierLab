@@ -2,60 +2,61 @@
 
 FileHandler::FileHandler() {}
 
-std::vector<std::string> FileHandler::readFileByLine(const std::string& fileName) {
-    // 读取文件的逻辑
-    std::ifstream file(fileName);
-    if (!file.is_open()) {
-        std::cerr << "Can not open file : " << fileName << std::endl; 
+void FileHandler::inputFileInit(const std::string& inputFileName){
+    // 初始化输入流
+    this->inputStream = std::ifstream(inputFileName);
+    if (!inputStream.is_open())
+    {
+        std::cerr << "无法打开输入文件。" << std::endl;
     }
+    
+}
+
+void FileHandler::outputFileInit(const std::string &outputFileName)
+{ 
+    // 初始化输出流
+    this->outputStream = std::ofstream(outputFileName);
+    if (!outputStream.is_open())
+    {
+        std::cerr << "无法打开输入文件。" << std::endl;
+    }
+}
+
+
+FileHandler::FileHandler(const std::string& inputFileName, const std::string& outputFileName)
+{
+    inputFileInit(inputFileName);
+    outputFileInit(outputFileName);
+}
+
+std::vector<std::string> FileHandler::readFileByLine() {
+    // 读取文件的逻辑
+
     std::vector<std::string> lines;
     std::string line;
-    while (std::getline(file, line)) {
+    while (std::getline(inputStream, line)) {
         lines.push_back(line);
     }
-    file.clear();  // 清除 EOF 状态
-    file.seekg(0); // 重置文件指针，方便重复读取
+    inputStream.clear();  // 清除 EOF 状态
+    inputStream.seekg(0); // 重置文件指针，方便重复读取
     return lines;
 }
 
-// 按块读取文件，返回 std::vector<std::string>
-std::vector<std::string> FileHandler::readFileByBlocks(const std::string &fileName)
-{
-    std::ifstream file(fileName);
-    std::vector<std::string> blocks;
-    std::size_t blockSize = 256;
-    char *buffer = new char[blockSize];
-
-    while (file.read(buffer, blockSize))
-    {
-        blocks.emplace_back(buffer, blockSize); // 将缓冲区内容转换为字符串并添加到向量
-    }
-
-    // 处理最后一次读取不足 blockSize 的情况
-    if (file.gcount() > 0)
-    {
-        blocks.emplace_back(buffer, file.gcount());
-    }
-
-    delete[] buffer; // 释放缓冲区
-    file.clear();    // 清除 EOF 状态
-    file.seekg(0);   // 重置文件指针
-    return blocks;
-}
-
-void FileHandler::writeFile(const std::string& fileName, const std::string& content) {
+void FileHandler::writeFile(const std::string& content) {
     // 写入文件的逻辑
-    std::ofstream file(fileName);
-    if (!file.is_open()) {
-        std::cerr << "Can not open file : " << fileName << std::endl; 
-    }
-    file << content;
+    outputStream << content << "\n";
 }
 
-void FileHandler::inputFileClose(std::ifstream file) {
-    file.close();
+void FileHandler::inputFileClose() {
+    inputStream.close();
 }
 
-void FileHandler::outputFileClose(std::ofstream file) {
-    file.close();
+void FileHandler::outputFileClose() {
+    outputStream.close();
+}
+
+
+FileHandler::~FileHandler() {
+    inputStream.close();
+    outputStream.close();
 }

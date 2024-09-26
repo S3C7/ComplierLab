@@ -5,12 +5,10 @@
 
 int main()
 {
-    FileHandler f;
     std::vector<std::string> lines;
+    FileHandler f ("input.txt", "output.txt");
 
-    lines = f.readFileByLine("input.txt");
-    // std::cout << lines.size() << std::endl;
-    // f.writeFile("output.txt", "1");
+    lines = f.readFileByLine();
     CommentRemover remover("//", "/*", "*/");
     HeaderFileManager HeaderFileManager("Clang");
     MacroProcessor macroProcessor;
@@ -29,12 +27,13 @@ int main()
         "}"
     };
 
+
     for (std::string& line : lines) {
         std::string nline = HeaderFileManager.processHeaders(line);
         nline = macroProcessor.expandMacros(nline);
         nline = remover.checkId(nline);
-        if (!line.empty()) {
-            std::cout << nline << std::endl; // 打印处理后的代码行
+        if (!nline.empty()) {
+            f.writeFile(nline); // 写入文件
         }
     }
 

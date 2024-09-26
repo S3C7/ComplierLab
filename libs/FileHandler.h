@@ -1,13 +1,24 @@
 #include "defs.h"
 
-class FileHandler {
+class FileHandler
+{
 public:
     FileHandler();
-    std::vector<std::string> readFileByLine(const std::string &fileName);
-    std::vector<std::string> readFileByBlocks(const std::string &fileName);
-    void writeFile(const std::string& fileName, const std::string& content);
-    void inputFileClose(std::ifstream file);
-    void outputFileClose(std::ofstream file);
-    
-};
 
+    void inputFileInit(const std::string &inputFileName);
+    void outputFileInit(const std::string &outputFileName);
+    
+    FileHandler(const std::string &inputFileName, 
+                const std::string &outputFileName);
+
+    std::vector<std::string> readFileByLine();
+    
+    void writeFile(const std::string &content);
+    void inputFileClose();
+    void outputFileClose();
+
+    ~FileHandler();
+private:
+    std::ifstream inputStream;
+    std::ofstream outputStream;
+};
