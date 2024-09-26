@@ -1,7 +1,7 @@
 # g++ Complier
 CXX = g++;
 # Complie option
-CXXFLAGS=-Wall -std=c++11 -I./libs
+CXXFLAGS = -Wall -std=c++11 -I./libs
 
 SRC = $(wildcard src/*.cpp) main.cpp
 OBJ = $(SRC:.cpp=.o)
