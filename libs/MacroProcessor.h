@@ -6,7 +6,7 @@ public:
     std::string expandMacros(const std::string& content);
 
 private:
-    void parseMacros(const std::string& content);
+    std::string parseMacros(const std::string& content);
     std::string expand(const std::string& text);
 
     // 存储宏定义的哈希表

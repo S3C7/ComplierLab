@@ -3,11 +3,11 @@
 MacroProcessor::MacroProcessor() {}
 
 std::string MacroProcessor::expandMacros(const std::string& content) {
-    parseMacros(content); // 解析宏定义
-    return expand(content); // 展开宏
+    std::string line = parseMacros(content); // 解析宏定义
+    return expand(line); // 展开宏
 }
 
-void MacroProcessor::parseMacros(const std::string& content) {
+std::string MacroProcessor::parseMacros(const std::string& content) {
     // 解析宏定义的逻辑
     std::string line = content;
     // 存储匹配的键值
@@ -18,8 +18,11 @@ void MacroProcessor::parseMacros(const std::string& content) {
         std::string macroValue = match[2];
 
         macros[macroName] = macroValue; // 存储到map中
+        
+        // 将宏定义行删除掉
+        line = "";
     }
-    
+    return line;
 }
 
 std::string MacroProcessor::expand(const std::string& text) {
