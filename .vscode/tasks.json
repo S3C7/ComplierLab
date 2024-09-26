@@ -27,11 +27,14 @@
             "command": "g++",
             "args": [
                 "-I./libs",
+                "-finput-charset=UTF-8",
+                "-fexec-charset=UTF-8",
                 "${workspaceFolder}/${fileBasename}",
                 "${workspaceFolder}/src/FileHandler.cpp",
                 "${workspaceFolder}/src/CommentRemover.cpp",
                 "${workspaceFolder}/src/HeaderFileManager.cpp",
                 "${workspaceFolder}/src/MacroProcessor.cpp",
+                "${workspaceFolder}/src/PreProcessor.cpp",
                 "-o",
                 "myprogram"
             ],
