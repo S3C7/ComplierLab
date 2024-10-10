@@ -7,7 +7,7 @@ void FileHandler::inputFileInit(const std::string& inputFileName){
     this->inputStream = std::ifstream(inputFileName);
     if (!inputStream.is_open())
     {
-        std::cerr << "无法打开输入文件。" << std::endl;
+        std::cerr << "Cannot open input file." << std::endl;
     }
     
 }
@@ -18,7 +18,7 @@ void FileHandler::outputFileInit(const std::string &outputFileName)
     this->outputStream = std::ofstream(outputFileName);
     if (!outputStream.is_open())
     {
-        std::cerr << "无法打开输入文件。" << std::endl;
+        std::cerr << "Cannot open output file." << std::endl;
     }
 }
 
