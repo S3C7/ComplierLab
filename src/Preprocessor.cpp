@@ -5,18 +5,25 @@ Preprocessor::Preprocessor()
 
 void Preprocessor::preprocess(const std::string& inputFile, const std::string& outputFile) {
     FileHandler f (inputFile, outputFile);
+    // 读取文件
     std::vector<std::string> lines = f.readFileByLine();
+    // 初始化CommentRemover
     CommentRemover remover("//", "/*", "*/");
+    // 初始化HeaderFileManager
     HeaderFileManager headerFileManager("Clang");
+    // 初始化MacroProcessor
     MacroProcessor macroProcessor;
 
     for (auto& line : lines) {
+        // 处理头文件
         std::string processedLine = headerFileManager.processHeaders(line);
+        // 展开宏
         processedLine = macroProcessor.expandMacros(processedLine);
+        // 检查并移除注释
         processedLine = remover.checkId(processedLine);
         if (!processedLine.empty()) {
             std::cout << processedLine << std::endl;  // 打印处理后的行
-
+            f.writeFile(processedLine);
         }
     }
 }

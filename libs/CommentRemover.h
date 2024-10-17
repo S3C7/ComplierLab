@@ -21,10 +21,13 @@ public:
     void setBlockCommentEndID(std::string blockCommenteID);
     std::string getBlockCommentEndID();
 
+    // 移除comment的核心函数
     std::string checkId(std::string& line);
     
 private:
+    // 移除单行注释
     std::string removeSingleLineComments(std::string line, size_t singleLineComment);
+    // 移除多行注释
     std::string removeMultiLineComments(std::string line, size_t blockCommentStart, 
                                         size_t blockCommentEnd);
 
