@@ -5,7 +5,7 @@ public:
     HeaderFileManager();
     HeaderFileManager(std::string lang) :lang(lang), lineNumber(1) {
         preprocessorRegexMap["Java"] = std::regex(R"(^\s*import\s+[\w.]+\s*;)");
-        preprocessorRegexMap["Clang"] = std::regex(R"(^\s*#\s*include\s*<.*>)");
+        preprocessorRegexMap["Clang"] = std::regex(R"(^\s*#\s*include\s*[<"].*[">])");
         preprocessorRegexMap["Python"] = std::regex(R"(^\s*import\s+[\w.]+)");
     };
 
@@ -15,10 +15,14 @@ public:
 
     bool isPreprocessor(const std::string& line, const std::string& lang);
 
+    std::vector<int> getLineNumbers();
+
+    void printIncludedHeaders() const;
+
 private:
     std::string includeHeader(const std::string& headerFile);
     // 存储已包含的头文件
-    std::unordered_set<std::string> includedHeaders;
+    std::unordered_map<int, std::string> includedHeaders;
     // 存储定义的头文件类型
     std::unordered_map<std::string, std::regex> preprocessorRegexMap;
 

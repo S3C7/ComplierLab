@@ -26,6 +26,8 @@ void Preprocessor::preprocess(const std::string& inputFile, const std::string& o
             f.writeFile(processedLine);
         }
     }
+    std::cout << std::endl;
+    headerFileManager.printIncludedHeaders();
 }
 
 Preprocessor::Language Preprocessor::selectLanguage() {
